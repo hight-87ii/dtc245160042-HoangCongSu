@@ -1,0 +1,63 @@
+version: "3.3"
+
+services:
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - recipehub_mysql_data:/var/lib/mysql
+    networks:
+      - recipehub_backend
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root --password=\"$${MYSQL_ROOT_PASSWORD}\""]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  wordpress:
+    image: wordpress:6.8-php8.2-apache
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    environment:
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+    ports:
+      - "127.0.0.1:8080:80"
+    volumes:
+      - recipehub_wordpress_data:/var/www/html
+    networks:
+      - recipehub_frontend
+      - recipehub_backend
+
+  phpmyadmin:
+    image: phpmyadmin:5.2-apache
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      UPLOAD_LIMIT: 16M
+    ports:
+      - "127.0.0.1:${PMA_PORT}:80"
+    networks:
+      - recipehub_backend
+
+networks:
+  recipehub_frontend:
+    driver: bridge
+  recipehub_backend:
+    driver: bridge
+    internal: true
+
+volumes:
+  recipehub_mysql_data:
+  recipehub_wordpress_data:
