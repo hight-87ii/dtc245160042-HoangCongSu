@@ -1,0 +1,16 @@
+.env
+.env.*
+!.env.example
+nginx/certs/*
+!nginx/certs/README.md
+*.key
+*.pem
+*.p12
+*.pfx
+*.log
+logs/
+tmp/
+temp/
+.vscode/
+.idea/
+.env
