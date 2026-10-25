@@ -8,7 +8,6 @@ Triển khai, đóng gói, điều phối, giám sát và bảo mật hệ thố
 | --- | --- |
 | **Trường** | Trường Đại học Công nghệ Thông tin và Truyền thông (ICTU) — Khoa Công nghệ Thông tin |
 | **Học phần** | Triển khai và Quản trị Hệ thống Phần mềm |
-| **Giảng viên hướng dẫn** | TS. Nguyễn Anh Chuyên |
 | **Họ và tên** | Hoàng Công Sự |
 | **MSSV** | DTC245160042 |
 | **Đề tài** | Đề 29 — Website Công thức Nấu ăn / Recipe (Món ăn, nguyên liệu, danh mục) |
